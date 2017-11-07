@@ -6,7 +6,7 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 
 const Deck = ({ deck, navigate }) => (
     <Card style={styles.card}>
-        <TouchableOpacity onPress={() => navigate('DeckDetail', { title: deck.title, deck })}>
+        <TouchableOpacity onPress={() => navigate('DeckDetail', { id: deck.id })}>
             <CardItem style={styles.cardItem}>
                 <H1> {deck.title} </H1>
                 <Text style={styles.cardCount}> {`${deck.questions.length} card(s) `}</Text>

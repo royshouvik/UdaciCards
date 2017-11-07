@@ -6,7 +6,7 @@ import DeckList from './DeckList';
 import NewDeck from './NewDeck';
 import DeckDetail from './DeckDetail';
 import NewCard from './NewCard';
-
+import Quiz from './Quiz';
   
 const Tab = TabNavigator(
     {
@@ -37,5 +37,6 @@ export default StackNavigator({
           },
     },
     DeckDetail: { screen: DeckDetail },
-    NewCard: { screen: NewCard }
+    NewCard: { screen: NewCard },
+    Quiz: { screen: Quiz }
   });

@@ -67,3 +67,29 @@ export function saveDeckTitle(title) {
     .catch(reject)
   })
 }
+
+export function getDeck(id) {
+  return new Promise((resolve, reject) => {
+    getDecks()
+    .then(decks =>  decks.filter(deck => deck.id === id)[0])
+    .then((deck) => resolve(deck))
+    .catch(reject);
+    });
+}
+
+export function addCardToDeck(id, card) {
+  return new Promise((resolve, reject) => {
+  getDecks()
+  .then(decks => {
+    const deckToUpdate = decks.filter(deck => deck.id === id)[0];
+    const otherDecks = decks.filter(deck => deck.id !== id);
+    const updatedQuestions = [...deckToUpdate.questions, card]
+    const updatedDeck = Object.assign({}, deckToUpdate, { questions: updatedQuestions});
+    const allDecks = [updatedDeck, ...otherDecks];
+    return allDecks;
+  })
+  .then((data) => AsyncStorage.setItem(key, JSON.stringify(data)))
+  .then(() => resolve(id))
+  .catch(reject);
+  });
+}

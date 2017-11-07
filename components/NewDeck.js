@@ -21,7 +21,7 @@ class NewDeck extends Component {
         const { navigate } = this.props.navigation;
         const { title } = this.state;
         saveDeckTitle(title)
-        .then((deck) => navigate('DeckDetail', { title, deck }))
+        .then((deck) => navigate('DeckDetail', { id: deck.id }))
         .then(() => this.setState({ title: ''}))
         .then(() => this.props.screenProps.update())
     }

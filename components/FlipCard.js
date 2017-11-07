@@ -25,14 +25,14 @@ export default class Flipper extends Component {
                     <Card style={styles.card}>
                         <CardItem style={styles.cardItem}>
                             <View style={styles.infoContainer}>
-                                <H1 style={styles.deckName}> {"question"} </H1>
+                                <H1 style={styles.deckName}> {question} </H1>
                             </View>
                         </CardItem>
                     </Card>
                     <Card style={styles.card}>
                         <CardItem style={[styles.cardItem, styles.back]}>
                             <View style={styles.infoContainer}>
-                                <H1 style={[styles.deckName, styles.backText]}> {"answer"} </H1>
+                                <H1 style={[styles.deckName, styles.backText]}> {answer} </H1>
                             </View>
                         </CardItem>
                     </Card>
