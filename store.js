@@ -3,7 +3,7 @@ import { AsyncStorage } from 'react-native';
 function generateId() {
   return Number(new Date());
 }
-export const key = '@UdaciCards:key';
+export const key = '@UdaciCards:key4';
 
 export const seedData = [
   {
@@ -65,7 +65,7 @@ export function saveDeckTitle(title) {
   return new Promise((resolve, reject) => {
     AsyncStorage.getItem(key)
     .then(value => JSON.parse(value))
-    .then(data => data.concat([newDeck]))
+    .then(data => [...data, newDeck])
     .then(updatedData => AsyncStorage.setItem(key, JSON.stringify(updatedData)))
     .then(() => resolve(newDeck))
     .catch(reject)
