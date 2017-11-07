@@ -1,7 +1,7 @@
 import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation';
-import { Container, Header, Content,  Title,  Left, Right } from 'native-base';
-import { View, Text } from 'react-native';
+import { Header, Title } from 'native-base';
+import { Platform } from 'react-native';
 import DeckList from './DeckList';
 import NewDeck from './NewDeck';
 import DeckDetail from './DeckDetail';
@@ -19,7 +19,7 @@ const Tab = TabNavigator(
     },
     {
         tabBarOptions: {
-            activeTintColor: '#ffffff',
+            activeTintColor: (Platform.OS === 'ios') ? '#4285f4' : '#ffffff',
             indicatorStyle: {
                 backgroundColor: '#ffffff'
             }

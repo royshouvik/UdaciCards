@@ -40,11 +40,17 @@ class NewCard extends Component {
                         <Form style={styles.input}>
                             <Item floatingLabel>
                                 <Label>Question</Label>
-                                <Input />
+                                <Input
+                                    onChangeText={(question) => this.setState({ question })}
+                                    value={this.state.question}
+                                />
                             </Item>
                             <Item floatingLabel>
                                 <Label>Answer</Label>
-                                <Input />
+                                <Input
+                                    onChangeText={(answer) => this.setState({ answer })}
+                                    value={this.state.answer}
+                                />
                             </Item>
                         </Form>
                     </View>

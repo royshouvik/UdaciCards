@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import { Card, CardItem, H1, H3, Text, Button, Input, Form, Item, Label } from 'native-base';
 import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import { saveDeckTitle } from '../store';
 
 class NewDeck extends Component {
     static navigationOptions = {
-        tabBarLabel: 'New Deck',
+        tabBarLabel: ({ tintColor }) => <Text style={{ color: tintColor}}>New Deck</Text>,
+        tabBarIcon: ({ tintColor }) => (
+          <MaterialIcons
+            name="add"
+            color={tintColor}
+          />
+        ),
       };
-
     constructor(props) {
         super(props);
 

@@ -7,10 +7,11 @@ import Deck from './Deck';
 export default class DeckList extends Component {
     
     static navigationOptions = {
-        tabBarLabel: 'Decks',
+        tabBarLabel: ({ tintColor }) => <Text style={{ color: tintColor }}>Deck List</Text>,
         tabBarIcon: ({ tintColor }) => (
           <MaterialCommunityIcons
             name="cards"
+            color={tintColor}
           />
         ),
       };

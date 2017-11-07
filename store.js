@@ -32,14 +32,18 @@ export const seedData = [
     }
 ];
 
-// export function seedInitialData() {
-//   return new Promise((resolve, reject) => {
-//     AsyncStorage.removeItem(key)
-//     .then(() => AsyncStorage
-//     .getItem(key)
-//     .then(value => JSON.parse(value))
-//   })
-// }
+export function seedInitialData() {
+  return new Promise((resolve, reject) => {
+    AsyncStorage.getItem(key)
+    .then(data => {
+      if (!data) {
+        return AsyncStorage.setItem(key, JSON.stringify(seedData))
+      }
+    })
+    .then(resolve)
+    .catch(reject)
+  })
+}
 export function getDecks() {
     return new Promise((resolve, reject) => {
       AsyncStorage

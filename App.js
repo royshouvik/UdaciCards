@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, AsyncStorage } from 'react-native';
 import { Container, Header, Content, Tab, Body, Title,  Left, Right } from 'native-base';
 import { AppLoading } from 'expo';
-import { key, seedData, getDecks } from './store';
+import { key, seedData, getDecks, seedInitialData } from './store';
 import DeckList from './components/DeckList';
 import DeckDetail from './components/DeckDetail';
 import Quiz from './components/Quiz';
 import NewDeck from './components/NewDeck';
 import NewCard from './components/NewCard';
-import Tabs from './components/Tab';
+import Navigation from './components/Navigation';
 import { StackNavigator } from 'react-navigation';
-
+import { setLocalNotification } from './notification';
 export default class App extends Component {
 
   constructor(props) {
@@ -24,13 +24,15 @@ export default class App extends Component {
   }
   
   async loadResource() {
-    await Promise.all([Expo.Font.loadAsync({
-      'Roboto': require('native-base/Fonts/Roboto.ttf'),
-      'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
-    }),
-      AsyncStorage.setItem(key, JSON.stringify(seedData))
-    ]
-    )
+    await Promise.all(
+      [
+        Expo.Font.loadAsync({
+          'Roboto': require('native-base/Fonts/Roboto.ttf'),
+          'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
+        }),
+      seedInitialData(),
+      setLocalNotification()
+    ])
 
   }
 
@@ -52,32 +54,10 @@ export default class App extends Component {
       />
     ) : (
       <Container>
-      {/* <Header style={{ alignItems: 'center'}}>
-            <Title>UdaciCards</Title>
-      </Header> */}
-      {
-        <Tabs screenProps={{
+        <Navigation screenProps={{
           update: this.update,
           data: this.state.data,
         }}/>
-      }
-      {/* <Tabs initialPage={0}>
-        <Tab heading="Decks">
-          <DeckList data={this.state.data} />
-        </Tab>
-        <Tab heading="Deck Detail">
-          <DeckDetail name="User Experience" cardCount={5} />
-        </Tab>
-        <Tab heading="Quiz View">
-          <Quiz question="Does React Native work with Android?" cardCount={5} />
-        </Tab>
-        <Tab heading="New Deck">
-          <NewDeck onUpdate={this.update}/>
-        </Tab>
-        <Tab heading="New Card">
-          <NewCard />
-        </Tab>
-      </Tabs> */}
     </Container>
     );
   }

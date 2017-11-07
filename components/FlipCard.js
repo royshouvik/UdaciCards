@@ -3,13 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { Card, CardItem, H1, H3, Text, Button } from 'native-base';
 import FlipCard from 'react-native-flip-card';
 
-export default class Flipper extends Component {
-
-    constructor(props) {
-        super(props);
-   
-    }
-    
+export default class Flipper extends Component {    
     render() {
         const {question, answer } = this.props;
         return (

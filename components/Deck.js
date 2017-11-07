@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card, CardItem, H1, Text } from 'native-base';
-import { View } from 'react-native';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
 
