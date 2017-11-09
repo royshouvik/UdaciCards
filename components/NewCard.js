@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, CardItem, H1, H3, Text, Button, Input, Form, Item, Label } from 'native-base';
-import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, View, KeyboardAvoidingView, Alert } from 'react-native';
 import { addCardToDeck } from '../store';
 
 
@@ -19,6 +19,13 @@ class NewCard extends Component {
         const { goBack, state } = this.props.navigation;
         const { id } = state.params;
         const { question, answer } = this.state;
+
+        if (question === '' || answer === '') {
+            return  Alert.alert(
+              'Invalid Input',
+              'Please specify a question and a answer',
+            );
+        }
         addCardToDeck(id, {
             question,
             answer

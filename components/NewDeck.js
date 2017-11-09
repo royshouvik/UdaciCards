@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, CardItem, H1, H3, Text, Button, Input, Form, Item, Label } from 'native-base';
-import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, View, KeyboardAvoidingView, Alert } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { saveDeckTitle } from '../store';
 
@@ -26,6 +26,12 @@ class NewDeck extends Component {
     handleSubmit() {
         const { navigate } = this.props.navigation;
         const { title } = this.state;
+        if (title === '') {
+            return  Alert.alert(
+              'Invalid Input',
+              'Please specify a deck title',
+            );
+        }
         saveDeckTitle(title)
         .then((deck) => navigate('DeckDetail', { id: deck.id }))
         .then(() => this.setState({ title: ''}))

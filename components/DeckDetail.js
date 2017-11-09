@@ -34,20 +34,23 @@ class DeckDetail extends Component {
         const { params } = this.props.navigation.state;
         const { navigate } = this.props.navigation;
         const { deck } = this.state;
+        const numQuestions = deck && deck.questions.length;
         return deck && (
             <Card style={styles.card}>
                 <CardItem style={styles.cardItem}>
                     <View style={styles.infoContainer}>
                         <H1 style={styles.deckName}> {deck.title} </H1>
-                        <H3 style={styles.cardCount}> {`${deck.questions.length} card(s)`}</H3>
+                        <H3 style={styles.cardCount}> {`${numQuestions} card(s)`}</H3>
                     </View>
                     <View style={styles.buttonContainer}>
                         <Button info style={styles.button} block onPress={() => navigate('NewCard', {id: deck.id })}>
                             <Text> Add Card </Text>
                         </Button>
-                        <Button primary style={styles.button} block onPress={() => navigate('Quiz', {id: deck.id })}>
-                            <Text> Start Quiz </Text>
-                        </Button>
+                        {
+                          (numQuestions > 0) && (<Button primary style={styles.button} block onPress={() => navigate('Quiz', {id: deck.id })}>
+                                <Text> Start Quiz </Text>
+                            </Button>)
+                        }
                     </View>
                 </CardItem>
             </Card>

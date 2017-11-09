@@ -16,9 +16,13 @@ class Quiz extends Component {
             deck : null,
             currentIndex: 0,
             numCorrect: 0,
+            showResult: false,
         }
         this.onCorrect = this.onCorrect.bind(this);
         this.onIncorrect = this.onIncorrect.bind(this);
+        this.showResult = this.showResult.bind(this);
+        this.onRestart = this.onRestart.bind(this);
+        this.onBackToDeck = this.onBackToDeck.bind(this);
     }
 
     componentWillMount() {
@@ -42,43 +46,69 @@ class Quiz extends Component {
         }
     }
 
+    onRestart() {
+        this.setState({
+            currentIndex: 0,
+            numCorrect: 0,
+            showResult: false,
+        });
+    }
+
+    onBackToDeck() {
+        const { goBack } = this.props.navigation;
+        goBack();
+    }
+
     onCorrect() {
-        const { deck, currentIndex, numCorrect } = this.state;
-        if ((currentIndex + 1) < deck.questions.length ) {
+        const { currentIndex, numCorrect } = this.state;
+        this.setState({
+            numCorrect: numCorrect + 1,
+            currentIndex: currentIndex + 1,
+        });
+        this.showResult();
+    }
+
+    showResult() {
+        const { deck, currentIndex } = this.state;
+        if ((currentIndex + 1) === deck.questions.length ) {
             this.setState({
-                numCorrect: numCorrect + 1,
-                currentIndex: currentIndex + 1,
+                showResult: true,
             });
-        } else {
-            this.setState({
-                numCorrect: 0,
-                currentIndex: 0,
-            })
         }
     }
 
     onIncorrect() {
-        const { deck, currentIndex } = this.state;
-        if ((currentIndex + 1) < deck.questions.length ) {
-            this.setState({
-                currentIndex: currentIndex + 1,
-            });
-        } else {
-            this.setState({
-                numCorrect: 0,
-                currentIndex: 0,
-            })
-        }
+        const { currentIndex } = this.state;
+        this.setState({
+            currentIndex: currentIndex + 1
+        });
 
+        this.showResult();
     }
 
     render() {
-        const { deck, currentIndex, numCorrect } = this.state;
+        const { deck, currentIndex, numCorrect, showResult } = this.state;
         const questions = deck && deck.questions;
         return deck && (
             <Card style={styles.card}>
-                <CardItem style={styles.cardItem}>
-                    <Text>{`Correct: ${numCorrect} Total: ${questions.length}`}</Text>
+                { showResult ? (
+                    <CardItem style={styles.result}>
+                        <View style={styles.score}>
+                            <H1>{`Correct: ${numCorrect}`}</H1>
+                            <H1>{`Total: ${questions.length}`}</H1>
+                        </View>
+                        <View style={styles.buttonContainer}>
+                            <Button info style={styles.button} block onPress={this.onRestart}>
+                                <Text> Restart Quiz </Text>
+                            </Button>
+                            <Button primary style={styles.button} block onPress={this.onBackToDeck}>
+                                <Text> Back to Deck </Text>
+                            </Button>
+                        </View>
+                </CardItem>
+                ) :
+                (<CardItem style={styles.cardItem}>
+                    <Text>{`Remaining cards: ${questions.length - currentIndex - 1}`}</Text>
                    <FlipCard
                         question={questions[currentIndex].question}
                         answer={questions[currentIndex].answer}
@@ -92,7 +122,8 @@ class Quiz extends Component {
                             <Text> Incorrect </Text>
                         </Button>
                     </View>
-                </CardItem>
+                </CardItem>)
+                }
             </Card>
         
         );
@@ -107,6 +138,16 @@ const styles = StyleSheet.create({
         alignItems: 'stretch',
         flexDirection: 'column',
         flex: 1
+    },
+    result: {
+        alignItems: 'stretch',
+        flexDirection: 'column',
+        flex: 1
+    },
+    score: {
+        flex: 2,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     question: {
         marginBottom: 20,
